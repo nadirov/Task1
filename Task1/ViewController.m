@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-#import <CoreData/CoreData.h>
+#import "CoreData/CoreData.h"
+#import "UIImage+Filters.h"
 
 @interface ViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 
@@ -50,7 +51,7 @@
 
 - (IBAction)Rotate:(UIButton *)sender
 {
-    UIImage *rotatedImage = [self imageRotatedByDegrees:self.sourceImage.image deg:90];
+    UIImage *rotatedImage = [UIImage imageRotatedByDegrees:self.sourceImage.image deg:90];
     [self saveData:rotatedImage];
     [self reloadTable];
 }
@@ -58,14 +59,14 @@
 {
     //using background thread not to block UI
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        UIImage *invertedImage = [self blackAndWhite:self.sourceImage.image];
+        UIImage *invertedImage = [UIImage blackAndWhite:self.sourceImage.image];
         [self saveData:invertedImage];
         [self reloadTable];
     });
 }
 - (IBAction)Mirror:(UIButton *)sender
 {
-    UIImage *mirroredImage = [self mirrored:self.sourceImage.image];
+    UIImage *mirroredImage = [UIImage mirrored:self.sourceImage.image];
     [self saveData:mirroredImage];
     [self reloadTable];
 }
@@ -267,62 +268,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (UIImage*)imageRotatedByDegrees:(UIImage*)oldImage deg:(CGFloat)degrees{
-    UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,oldImage.size.width, oldImage.size.height)];
-    CGAffineTransform t = CGAffineTransformMakeRotation(degrees * M_PI / 180);
-    rotatedViewBox.transform = t;
-    CGSize rotatedSize = rotatedViewBox.frame.size;
-    
-    UIGraphicsBeginImageContext(rotatedSize);
-    CGContextRef bitmap = UIGraphicsGetCurrentContext();
-    
-    CGContextTranslateCTM(bitmap, rotatedSize.width/2, rotatedSize.height/2);
-    
-    CGContextRotateCTM(bitmap, (degrees * M_PI / 180));
-    
-    CGContextScaleCTM(bitmap, 1.0, -1.0);
-    CGContextDrawImage(bitmap, CGRectMake(-oldImage.size.width / 2, -oldImage.size.height / 2, oldImage.size.width, oldImage.size.height), [oldImage CGImage]);
-    
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return newImage;
-}
-
--(UIImage*)mirrored:(UIImage*)image
-{
-    UIImageOrientation flippedOrientation = UIImageOrientationUpMirrored;
-    switch (image.imageOrientation) {
-        case UIImageOrientationDown:
-            flippedOrientation = UIImageOrientationDownMirrored;
-            break;
-        case UIImageOrientationLeft:
-            flippedOrientation = UIImageOrientationLeftMirrored;
-            break;
-        case UIImageOrientationUp:
-            flippedOrientation = UIImageOrientationUpMirrored;
-            break;
-        case UIImageOrientationRight:
-            flippedOrientation = UIImageOrientationRightMirrored;
-            break;
-    }
-    UIImage * flippedImage = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:flippedOrientation];
-    return flippedImage;
-}
-
-- (UIImage*)blackAndWhite:(UIImage*)image
-{
-    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
-    CIImage *beginImage = [CIImage imageWithData:imageData];
-    CIImage *blackAndWhite = [CIFilter filterWithName:@"CIColorControls" keysAndValues:kCIInputImageKey, beginImage, @"inputBrightness", [NSNumber numberWithFloat:0.0], @"inputContrast", [NSNumber numberWithFloat:1.1], @"inputSaturation", [NSNumber numberWithFloat:0.0], nil].outputImage;
-    CIImage *output = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, blackAndWhite, @"inputEV", [NSNumber numberWithFloat:0.7], nil].outputImage;
-    
-    CIContext *context = [CIContext contextWithOptions:nil];
-    CGImageRef cgiimage = [context createCGImage:output fromRect:output.extent];
-    UIImage *newImage = [UIImage imageWithCGImage:cgiimage];
-    
-    CGImageRelease(cgiimage);
-    return newImage;
-}
 
 - (void)reloadTable
 {
