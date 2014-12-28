@@ -32,10 +32,10 @@
     return newImage;
 }
 
-+ (UIImage*)mirrored:(UIImage*)image
++ (UIImage*)mirrored:(UIImage*)oldImage
 {
     UIImageOrientation flippedOrientation = UIImageOrientationUpMirrored;
-    switch (image.imageOrientation) {
+    switch (oldImage.imageOrientation) {
         case UIImageOrientationDown:
             flippedOrientation = UIImageOrientationDownMirrored;
             break;
@@ -49,13 +49,13 @@
             flippedOrientation = UIImageOrientationRightMirrored;
             break;
     }
-    UIImage * flippedImage = [UIImage imageWithCGImage:image.CGImage scale:image.scale orientation:flippedOrientation];
-    return flippedImage;
+    UIImage *newImage = [UIImage imageWithCGImage:oldImage.CGImage scale:oldImage.scale orientation:flippedOrientation];
+    return newImage;
 }
 
-+ (UIImage*)blackAndWhite:(UIImage*)image
++ (UIImage*)blackAndWhite:(UIImage*)oldImage
 {
-    NSData *imageData = UIImageJPEGRepresentation(image, 1.0);
+    NSData *imageData = UIImageJPEGRepresentation(oldImage, 1.0);
     CIImage *beginImage = [CIImage imageWithData:imageData];
     CIImage *blackAndWhite = [CIFilter filterWithName:@"CIColorControls" keysAndValues:kCIInputImageKey, beginImage, @"inputBrightness", [NSNumber numberWithFloat:0.0], @"inputContrast", [NSNumber numberWithFloat:1.1], @"inputSaturation", [NSNumber numberWithFloat:0.0], nil].outputImage;
     CIImage *output = [CIFilter filterWithName:@"CIExposureAdjust" keysAndValues:kCIInputImageKey, blackAndWhite, @"inputEV", [NSNumber numberWithFloat:0.7], nil].outputImage;
