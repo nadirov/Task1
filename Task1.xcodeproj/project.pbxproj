@@ -15,6 +15,7 @@
 		847853EB1A49920200E471FB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 847853EA1A49920200E471FB /* Images.xcassets */; };
 		847853EE1A49920200E471FB /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 847853EC1A49920200E471FB /* LaunchScreen.xib */; };
 		847853FA1A49920200E471FB /* Task1Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 847853F91A49920200E471FB /* Task1Tests.m */; };
+		84A1A3981A4AEDB100059A6E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A1A3971A4AEDB100059A6E /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		847853F31A49920200E471FB /* Task1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Task1Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		847853F81A49920200E471FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		847853F91A49920200E471FB /* Task1Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Task1Tests.m; sourceTree = "<group>"; };
+		84A1A3971A4AEDB100059A6E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -49,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84A1A3981A4AEDB100059A6E /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +68,7 @@
 		847853CE1A49920100E471FB = {
 			isa = PBXGroup;
 			children = (
+				84A1A3971A4AEDB100059A6E /* CoreData.framework */,
 				847853D91A49920100E471FB /* Task1 */,
 				847853F61A49920200E471FB /* Task1Tests */,
 				847853D81A49920100E471FB /* Products */,
@@ -416,6 +420,7 @@
 				847853FF1A49920200E471FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		847854001A49920200E471FB /* Build configuration list for PBXNativeTarget "Task1Tests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +429,7 @@
 				847854021A49920200E471FB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

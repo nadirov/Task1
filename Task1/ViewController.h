@@ -8,7 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController 
+
+@property (strong, nonatomic) IBOutlet UIImageView *sourceImage;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
+
+- (IBAction)ChoosePicture:(UIButton *)sender;
+- (IBAction)Rotate:(UIButton *)sender;
+- (IBAction)InvertColors:(UIButton *)sender;
+- (IBAction)Mirror:(UIButton *)sender;
+
+
 
 
 @end
