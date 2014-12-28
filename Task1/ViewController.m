@@ -207,8 +207,8 @@
                                      message:nil
                                      delegate:self
                                      cancelButtonTitle:[NSString stringWithFormat:@"Cancel"]  otherButtonTitles:[NSString stringWithFormat:@"Take a Picture"], [NSString stringWithFormat:@"Choose from Gallery"] ,nil];
-        [alertView show];
-        alertView.tag = 1; // Putting tag here because alertViewController is used twice
+             [alertView show];
+            alertView.tag = 1; // Putting tag here because alertViewController is used twice
          }
     }
     else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
@@ -267,7 +267,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (UIImage *)imageRotatedByDegrees:(UIImage*)oldImage deg:(CGFloat)degrees{
+- (UIImage*)imageRotatedByDegrees:(UIImage*)oldImage deg:(CGFloat)degrees{
     UIView *rotatedViewBox = [[UIView alloc] initWithFrame:CGRectMake(0,0,oldImage.size.width, oldImage.size.height)];
     CGAffineTransform t = CGAffineTransformMakeRotation(degrees * M_PI / 180);
     rotatedViewBox.transform = t;
@@ -288,7 +288,7 @@
     return newImage;
 }
 
--(UIImage *)mirrored:(UIImage *)image
+-(UIImage*)mirrored:(UIImage*)image
 {
     UIImageOrientation flippedOrientation = UIImageOrientationUpMirrored;
     switch (image.imageOrientation) {
@@ -330,7 +330,7 @@
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] initWithEntityName:@"EditedImage"];
     self.images = [[managedObjectContext executeFetchRequest:fetchRequest error:nil] mutableCopy];
     [self.tableView reloadData];
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height-self.tableView.frame.size.height) animated:YES]; // Will scroll to latest added picture
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height-self.tableView.frame.size.height) animated:YES]; // Will scroll to the latest added image
 }
 
 - (void)saveData:(UIImage*)image
@@ -346,18 +346,18 @@
     }
 }
 
-- (UIImage*)selectedRowImage:(NSInteger)hitIndexRow
+- (UIImage*)selectedRowImage:(NSInteger)hitIndexRow // hitIndexRow = indexPath.row
 {
     NSManagedObject *cellObject = [self.images objectAtIndex:hitIndexRow];
     return [UIImage imageWithData:[cellObject valueForKey:@"image"]];
 }
 
-- (void)UseAsSource:(NSInteger)hitIndexRow
+- (void)UseAsSource:(NSInteger)hitIndexRow // hitIndexRow = indexPath.row
 {
     [self.sourceImage  setImage:[self selectedRowImage:hitIndexRow]];
 }
 
-- (void)SaveToGallery:(NSInteger)hitIndexRow
+- (void)SaveToGallery:(NSInteger)hitIndexRow // hitIndexRow = indexPath.row
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         UIImageWriteToSavedPhotosAlbum([self selectedRowImage:hitIndexRow], nil, nil, nil);
