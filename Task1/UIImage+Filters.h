@@ -10,6 +10,6 @@
 
 @interface UIImage (Filters)
 + (UIImage*)imageRotatedByDegrees:(UIImage*)oldImage deg:(CGFloat)degrees;
-+ (UIImage*)mirrored:(UIImage*)image;
-+ (UIImage*)blackAndWhite:(UIImage*)image;
++ (UIImage*)mirrored:(UIImage*)oldImage;
++ (UIImage*)blackAndWhite:(UIImage*)oldImage;
 @end
